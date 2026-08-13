@@ -1,0 +1,10 @@
+{
+  "name":"Шкипер — Aviation Ecosystem",
+  "short_name":"Шкипер",
+  "start_url":"./",
+  "display":"standalone",
+  "background_color":"#07111f",
+  "theme_color":"#0b84ff",
+  "lang":"ru",
+  "description":"Авиационная экосистема экипажа"
+}

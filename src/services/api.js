@@ -1,0 +1,2 @@
+import{CONFIG}from'../core/config.js';
+export async function call(name,body={}){const token=window.firebase?.auth?.().currentUser?await window.firebase.auth().currentUser.getIdToken():'';const r=await fetch(`${CONFIG.apiBase}/${name}`,{method:'POST',headers:{'content-type':'application/json',...(token?{authorization:`Bearer ${token}`}:{})},body:JSON.stringify(body)});const data=await r.json().catch(()=>({error:'Invalid server response'}));if(!r.ok)throw new Error(data.error||`Ошибка ${r.status}`);return data;}

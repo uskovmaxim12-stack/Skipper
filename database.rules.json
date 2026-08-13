@@ -1,0 +1,196 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "posts": {
+      ".read": "(query.orderByChild === 'status' && query.equalTo === 'published') || (auth != null && root.child('users').child(auth.uid).child('access').child('rank').val() >= 50)",
+      ".indexOn": [
+        "status",
+        "publishedAt",
+        "createdAt"
+      ]
+    },
+    "publicProfiles": {
+      ".read": true,
+      "$uid": {
+        "name": {
+          ".write": "auth != null && auth.uid === $uid",
+          ".validate": "newData.isString() && newData.val().length <= 100"
+        },
+        "username": {
+          ".write": "auth != null && auth.uid === $uid",
+          ".validate": "newData.isString() && newData.val().length <= 100"
+        },
+        "photo": {
+          ".write": "auth != null && auth.uid === $uid",
+          ".validate": "newData.isString() && newData.val().length <= 1000"
+        },
+        "bio": {
+          ".write": "auth != null && auth.uid === $uid",
+          ".validate": "newData.isString() && newData.val().length <= 500"
+        },
+        "lastSeenAt": {
+          ".write": "false"
+        },
+        "xp": {
+          ".write": "false"
+        },
+        "level": {
+          ".write": "false"
+        },
+        "role": {
+          ".write": "false"
+        },
+        "rank": {
+          ".write": "false"
+        },
+        "status": {
+          ".write": "false"
+        }
+      }
+    },
+    "users": {
+      "$uid": {
+        ".read": "auth != null && (auth.uid === $uid || root.child('users').child(auth.uid).child('access').child('rank').val() >= 80)",
+        "profile": {
+          ".write": false,
+          ".validate": "newData.hasChildren(['name','username','photo','bio'])",
+          "name": {
+            ".write": "auth != null && auth.uid === $uid",
+            ".validate": "newData.isString() && newData.val().length <= 100"
+          },
+          "username": {
+            ".write": "auth != null && auth.uid === $uid",
+            ".validate": "newData.isString() && newData.val().length <= 100"
+          },
+          "photo": {
+            ".write": "auth != null && auth.uid === $uid",
+            ".validate": "newData.isString() && newData.val().length <= 1000"
+          },
+          "bio": {
+            ".write": "auth != null && auth.uid === $uid",
+            ".validate": "newData.isString() && newData.val().length <= 500"
+          }
+        },
+        "meta": {
+          ".write": "false"
+        },
+        "stats": {
+          ".write": "false"
+        },
+        "access": {
+          ".write": "false"
+        }
+      }
+    },
+    "presence": {
+      "$uid": {
+        ".read": "true",
+        ".write": "false"
+      }
+    },
+    "forumThreads": {
+      ".read": "(query.orderByChild === 'status' && query.equalTo === 'published') || (auth != null && root.child('users').child(auth.uid).child('access').child('rank').val() >= 60)",
+      ".indexOn": [
+        "status",
+        "updatedAt"
+      ],
+      "$threadId": {
+        ".read": "(data.child('status').val() === 'published') || (auth != null && root.child('users').child(auth.uid).child('access').child('rank').val() >= 60)"
+      }
+    },
+    "forumReactions": {
+      ".read": false,
+      ".write": false
+    },
+    "notifications": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        "$id": {
+          ".write": "false"
+        }
+      }
+    },
+    "chats": {
+      "$chatId": {
+        ".read": "auth != null && data.child('members').child(auth.uid).exists()",
+        ".write": "false"
+      }
+    },
+    "typing": {
+      "$chatId": {
+        ".read": "auth != null && root.child('chats').child($chatId).child('members').child(auth.uid).exists()",
+        ".write": "false",
+        "$uid": {
+          ".read": "auth != null && root.child('chats').child($chatId).child('members').child(auth.uid).exists()",
+          ".write": false
+        }
+      }
+    },
+    "moderation": {
+      ".read": "auth != null && root.child('users').child(auth.uid).child('access').child('rank').val() >= 60",
+      ".write": "false"
+    },
+    "reports": {
+      ".read": "auth != null && root.child('users').child(auth.uid).child('access').child('rank').val() >= 60",
+      ".write": "false"
+    },
+    "adminAudit": {
+      ".read": "auth != null && root.child('users').child(auth.uid).child('access').child('rank').val() >= 80",
+      ".write": "false"
+    },
+    "system": {
+      ".read": true,
+      ".write": false
+    },
+    "xpLedger": {
+      ".read": false,
+      ".write": false
+    },
+    "xpDaily": {
+      ".read": false,
+      ".write": false
+    },
+    "gameScores": {
+      ".read": "auth != null",
+      ".write": false
+    },
+    "comments": {
+      ".read": true,
+      ".write": false
+    },
+    "privateSystem": {
+      ".read": false,
+      ".write": false
+    },
+    "userChats": {
+      ".read": false,
+      ".write": false,
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": false,
+        "$chatId": {
+          ".read": "auth != null && auth.uid === $uid",
+          ".write": false,
+          ".validate": "newData.hasChildren(['id','otherUid','updatedAt'])"
+        }
+      }
+    },
+    "postReactions": {
+      ".read": false,
+      ".write": false,
+      "$postId": {
+        "$uid": {
+          ".read": "auth != null && auth.uid === $uid",
+          ".write": false
+        }
+      }
+    },
+    "postStats": {
+      "$postId": {
+        ".read": true,
+        ".write": false
+      }
+    }
+  }
+}

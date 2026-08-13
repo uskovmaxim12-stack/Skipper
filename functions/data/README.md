@@ -1,0 +1,1 @@
+# Official data\n\nThis catalog contains real aviation materials and events from official ICAO, EASA and EUROCONTROL pages. It contains no generated user accounts or synthetic community activity.\n

@@ -1,0 +1,1 @@
+export const CONFIG={version:'13.0.0',apiBase:window.SKIPPER_FUNCTIONS_BASE||'https://europe-west1-shkiper-5650c.cloudfunctions.net',channelUrl:window.SKIPPER_CHANNEL||'https://t.me/skipperpilott',sourceOfTruth:'live',forum:{maxTitle:140,maxText:12000},message:{max:4000}};

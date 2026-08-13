@@ -1,0 +1,1 @@
+{"name":"skipper-ecosystem","private":true,"scripts":{"check":"node scripts/check.mjs"},"version":"13.0.0"}
